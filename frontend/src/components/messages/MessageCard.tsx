@@ -39,6 +39,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({ message }) => {
         <div className="fullMessage" style={{ border: '2px solid' }}>
           <div>{messageState.title}</div>
           <div>{messageState.date}</div>
+          <img src={messageState.imageUrl} alt="" style={{ width: '400px' }} />
           <div>{messageState.content}</div>
           <div>{messageState.isNew}</div>
           <div>{messageState.isRead}</div>
