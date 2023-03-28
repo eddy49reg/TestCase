@@ -7,7 +7,9 @@ export const FilterForm: React.FC = () => {
   // const [filter, setFilter] = useState<Filters>(initialFilterState);
   // console.log(filter);
   console.log(filterState);
-
+  // const formatDate = (dateString: string | undefined) => {
+  //   if (dateString) return dateString + ':00.000Z';
+  // };
   const handleInputChange = (field: string, value: any) => {
     setFilterState({ ...filterState, [field]: value });
   };

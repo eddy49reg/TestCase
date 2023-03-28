@@ -1,32 +1,30 @@
 import { Filters, Message } from '../components/messages/types/type';
-
-// const formatDate = (dateString: string | undefined) => {
-//   if (dateString) return dateString + ':00.000Z';
-// };
-
 export async function fetchMessages(filters: Filters): Promise<Message[]> {
+  // const formatDate = (dateString: string | undefined) => {
+  //   if (dateString) return dateString + ':00.000Z';
+  // };
   // const formattedFilters = {
   //   ...filters,
   //   dateFrom: formatDate(filters.dateFrom),
   //   dateTo: formatDate(filters.dateTo),
   // };
-  // console.log('Fetching messages with filters:', formattedFilters);
-  // const queryParams = new URLSearchParams(
-  //   Object.entries(formattedFilters).map(([key, value]) => [key, String(value)])
-  // ).toString();
-
+  console.log('Fetching messages with filters:', filters);
   const queryParams = new URLSearchParams(
-    Object.entries({
-      platformCode: 'tg',
-      dateFrom: '2015-01-28T09:35:00.000Z',
-      dateTo: '2035-01-28T09:35:00.000Z',
-      pageNumber: 1,
-      pageSize: 100,
-      reaction: 'positive',
-      sortingDirection: 'asc',
-      sortingField: 'date',
-    }).map(([key, value]) => [key, String(value)])
+    Object.entries(filters).map(([key, value]) => [key, String(value)])
   ).toString();
+
+  // const queryParams = new URLSearchParams(
+  //   Object.entries({
+  //     platformCode: 'tg',
+  //     dateFrom: '2015-01-28T09:35:00.000Z',
+  //     dateTo: '2035-01-28T09:35:00.000Z',
+  //     pageNumber: 1,
+  //     pageSize: 100,
+  //     reaction: 'positive',
+  //     sortingDirection: 'asc',
+  //     sortingField: 'date',
+  //   }).map(([key, value]) => [key, String(value)])
+  // ).toString();
 
   const accessToken = localStorage.getItem('accessToken');
 
