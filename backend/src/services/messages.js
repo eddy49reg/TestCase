@@ -19,23 +19,47 @@ async function list(query, sorting, pagination) {
         omit(message, ["imageUrl"])
     );
 
+    // if (!isEmpty(query)) {
+    //     filteringMessages = filteringMessages.filter(message => {
+    //         let include = false;
+    //         if (
+    //             (!isUndefined(query.isRead) &&
+    //                 message.isRead === query.isRead) ||
+    //             (!isUndefined(query.isNew) && message.isNew === query.isNew) ||
+    //             (query.search && message.content.includes(query.search)) ||
+    //             (query.reaction && query.reaction === message.reaction) ||
+    //             (query.platformCode &&
+    //                 query.platformCode === message.platform.code) ||
+    //             (query.dateFrom &&
+    //                 new Date(query.dateFrom) <= new Date(message.date)) ||
+    //             (query.dateTo &&
+    //                 new Date(query.dateTo) >= new Date(message.date))
+    //         ) {
+    //             include = true;
+    //         }
+
+    //         return include;
+    //     });
+    // }
     if (!isEmpty(query)) {
         filteringMessages = filteringMessages.filter(message => {
-            let include = false;
+            let include = true;
             if (
-                (!isUndefined(query.isRead) &&
-                    message.isRead === query.isRead) ||
-                (!isUndefined(query.isNew) && message.isNew === query.isNew) ||
-                (query.search && message.content.includes(query.search)) ||
-                (query.reaction && query.reaction === message.reaction) ||
-                (query.platformCode &&
-                    query.platformCode === message.platform.code) ||
-                (query.dateFrom &&
-                    new Date(query.dateFrom) <= new Date(message.date)) ||
-                (query.dateTo &&
+                (isUndefined(query.isRead) ||
+                    message.isRead === query.isRead) &&
+                (isUndefined(query.isNew) || message.isNew === query.isNew) &&
+                (!query.search || message.content.includes(query.search)) &&
+                (!query.reaction || query.reaction === message.reaction) &&
+                (!query.platformCode ||
+                    query.platformCode === message.platform.code) &&
+                (!query.dateFrom ||
+                    new Date(query.dateFrom) <= new Date(message.date)) &&
+                (!query.dateTo ||
                     new Date(query.dateTo) >= new Date(message.date))
             ) {
                 include = true;
+            } else {
+                include = false;
             }
 
             return include;
