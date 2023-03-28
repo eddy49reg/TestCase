@@ -69,14 +69,14 @@ router.get("/:id", async ctx => {
 router.patch("/:id", bodyParser(), async ctx => {
     const { id } = ctx.params;
 
-    const { isNew } = ctx.request.body;
+    const { isNew, isRead } = ctx.request.body;
 
-    if (isUndefined(isNew)) {
+    if (isUndefined(isNew) && isUndefined(isRead)) {
         const error = new Error();
         error.status = 400;
         throw error;
     }
-    const values = { isNew };
+    const values = { isNew, isRead };
 
     await update(
         {
