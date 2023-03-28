@@ -1,4 +1,8 @@
-import { Filters, Message } from '../components/messages/types/type';
+import {
+  Filters,
+  Message,
+  UpdatedMessageFields,
+} from '../components/messages/types/type';
 export async function fetchMessages(filters: Filters): Promise<Message[]> {
   // const formatDate = (dateString: string | undefined) => {
   //   if (dateString) return dateString + ':00.000Z';
@@ -46,4 +50,37 @@ export async function fetchMessages(filters: Filters): Promise<Message[]> {
   }
 
   return (await response.json()).data;
+}
+
+export async function updateMessage(
+  messageId: Message['id'],
+  updatedFields: UpdatedMessageFields
+) {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await fetch(
+      `http://localhost:4000/messages/${messageId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(updatedFields),
+      }
+    );
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(
+        `Ошибка при обновлении сообщения: ${response.statusText}`
+      );
+    }
+
+    const updatedMessage = await response.json();
+    console.log(updateMessage);
+    return updatedMessage;
+  } catch (error) {
+    console.error('Ошибка при выполнении запроса:', error);
+    throw error;
+  }
 }

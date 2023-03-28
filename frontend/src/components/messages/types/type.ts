@@ -43,3 +43,7 @@ export type Filters = {
 export interface MessageCardProps {
   message: Message;
 }
+
+export type UpdatedMessageFields = {
+  isNew?: boolean;
+};
